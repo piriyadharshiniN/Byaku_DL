@@ -1,0 +1,163 @@
+{
+  "source_video": "C:\\Users\\piriyadharshini\\OneDrive\\Documents\\Byaku\\Data\\samples\\indoor_objects_video.mp4",
+  "annotated_video": "indoor_objects_video_annotated.mp4",
+  "narration_audio": "indoor_objects_video_narration.wav",
+  "width": 720,
+  "height": 1280,
+  "fps": 30.0,
+  "total_frames": 141,
+  "duration_seconds": 4.7,
+  "narration_script": "A person is visible on the left and appears far. A person is visible near the center and appears far. A person is visible on the left and appears far. A car is visible near the center and appears far. A person is visible on the left and appears far. A person is visible near the center and appears far. A person is visible on the left and appears far. A car is visible on the right and appears far. A person is visible on the left and appears far. A person is visible on the right and appears far. A person is visible on the left and appears far. A car is visible on the right and appears far. A person is visible on the left and appears far. A motorcycle is visible in the lower right and appears at mid-range. A person is visible on the left and appears far. A bicycle is visible in the lower right and appears at mid-range. A person is visible on the left and appears far. A car is visible near the center and appears far. A person is visible on the left and appears far. A motorcycle is visible in the lower right and appears near. A person is visible on the left and appears far. A person is visible in the lower center and appears at mid-range. A person is visible on the left and appears far. A motorcycle is visible in the lower center and appears near. A person is visible on the left and appears far. A motorcycle is visible in the lower center and appears at mid-range. A person is visible on the left and appears far. A motorcycle is visible in the lower center and appears near. A motorcycle is visible in the lower left and appears at mid-range. A person is visible on the left and appears far. A motorcycle is visible in the lower left and appears at mid-range. A person is visible in the lower left and appears at mid-range. A motorcycle is visible in the lower left and appears at mid-range. A person is visible on the left and appears far. A motorcycle is visible in the lower left and appears at mid-range. A person is visible on the left and appears at mid-range. A motorcycle is visible in the lower left and appears at mid-range. A person is visible on the left and appears far. A person is visible on the left and appears far. A person is visible near the center and appears far. A person is visible on the left and appears far. A person is visible on the left and appears at mid-range. A person is visible on the left and appears far. A person is visible near the center and appears far. A person is visible on the left and appears far. A car is visible near the center and appears far. A person is visible on the left and appears far. A person is visible near the center and appears far. A person is visible on the left and appears far. A car is visible near the center and appears far. A person is visible on the left and appears far. A person is visible near the center and appears far. A person is visible on the left and appears far. A car is visible near the center and appears far. A person is visible on the left and appears far. A person is visible near the center and appears far. A person is visible on the left and appears far. A car is visible near the center and appears far. A person is visible on the left and appears far. A person is visible near the center and appears far.",
+  "narration_cues": [
+    {
+      "frame": 1,
+      "timestamp_s": 0.03333333333333333,
+      "text": "A person is visible on the left and appears far. A person is visible near the center and appears far."
+    },
+    {
+      "frame": 14,
+      "timestamp_s": 0.4666666666666667,
+      "text": "A person is visible on the left and appears far. A car is visible near the center and appears far."
+    },
+    {
+      "frame": 16,
+      "timestamp_s": 0.5333333333333333,
+      "text": "A person is visible on the left and appears far. A person is visible near the center and appears far."
+    },
+    {
+      "frame": 17,
+      "timestamp_s": 0.5666666666666667,
+      "text": "A person is visible on the left and appears far. A car is visible on the right and appears far."
+    },
+    {
+      "frame": 26,
+      "timestamp_s": 0.8666666666666667,
+      "text": "A person is visible on the left and appears far. A person is visible on the right and appears far."
+    },
+    {
+      "frame": 35,
+      "timestamp_s": 1.1666666666666667,
+      "text": "A person is visible on the left and appears far. A car is visible on the right and appears far."
+    },
+    {
+      "frame": 37,
+      "timestamp_s": 1.2333333333333334,
+      "text": "A person is visible on the left and appears far. A motorcycle is visible in the lower right and appears at mid-range."
+    },
+    {
+      "frame": 38,
+      "timestamp_s": 1.2666666666666666,
+      "text": "A person is visible on the left and appears far. A bicycle is visible in the lower right and appears at mid-range."
+    },
+    {
+      "frame": 39,
+      "timestamp_s": 1.3,
+      "text": "A person is visible on the left and appears far. A car is visible near the center and appears far."
+    },
+    {
+      "frame": 43,
+      "timestamp_s": 1.4333333333333333,
+      "text": "A person is visible on the left and appears far. A motorcycle is visible in the lower right and appears near."
+    },
+    {
+      "frame": 44,
+      "timestamp_s": 1.4666666666666666,
+      "text": "A person is visible on the left and appears far. A person is visible in the lower center and appears at mid-range."
+    },
+    {
+      "frame": 45,
+      "timestamp_s": 1.5,
+      "text": "A person is visible on the left and appears far. A motorcycle is visible in the lower center and appears near."
+    },
+    {
+      "frame": 47,
+      "timestamp_s": 1.5666666666666667,
+      "text": "A person is visible on the left and appears far. A motorcycle is visible in the lower center and appears at mid-range."
+    },
+    {
+      "frame": 49,
+      "timestamp_s": 1.6333333333333333,
+      "text": "A person is visible on the left and appears far. A motorcycle is visible in the lower center and appears near."
+    },
+    {
+      "frame": 51,
+      "timestamp_s": 1.7,
+      "text": "A motorcycle is visible in the lower left and appears at mid-range. A person is visible on the left and appears far."
+    },
+    {
+      "frame": 52,
+      "timestamp_s": 1.7333333333333334,
+      "text": "A motorcycle is visible in the lower left and appears at mid-range. A person is visible in the lower left and appears at mid-range."
+    },
+    {
+      "frame": 53,
+      "timestamp_s": 1.7666666666666666,
+      "text": "A motorcycle is visible in the lower left and appears at mid-range. A person is visible on the left and appears far."
+    },
+    {
+      "frame": 55,
+      "timestamp_s": 1.8333333333333333,
+      "text": "A motorcycle is visible in the lower left and appears at mid-range. A person is visible on the left and appears at mid-range."
+    },
+    {
+      "frame": 60,
+      "timestamp_s": 2.0,
+      "text": "A motorcycle is visible in the lower left and appears at mid-range. A person is visible on the left and appears far."
+    },
+    {
+      "frame": 61,
+      "timestamp_s": 2.033333333333333,
+      "text": "A person is visible on the left and appears far. A person is visible near the center and appears far."
+    },
+    {
+      "frame": 66,
+      "timestamp_s": 2.2,
+      "text": "A person is visible on the left and appears far. A person is visible on the left and appears at mid-range."
+    },
+    {
+      "frame": 67,
+      "timestamp_s": 2.2333333333333334,
+      "text": "A person is visible on the left and appears far. A person is visible near the center and appears far."
+    },
+    {
+      "frame": 70,
+      "timestamp_s": 2.3333333333333335,
+      "text": "A person is visible on the left and appears far. A car is visible near the center and appears far."
+    },
+    {
+      "frame": 77,
+      "timestamp_s": 2.566666666666667,
+      "text": "A person is visible on the left and appears far. A person is visible near the center and appears far."
+    },
+    {
+      "frame": 89,
+      "timestamp_s": 2.966666666666667,
+      "text": "A person is visible on the left and appears far. A car is visible near the center and appears far."
+    },
+    {
+      "frame": 91,
+      "timestamp_s": 3.033333333333333,
+      "text": "A person is visible on the left and appears far. A person is visible near the center and appears far."
+    },
+    {
+      "frame": 99,
+      "timestamp_s": 3.3,
+      "text": "A person is visible on the left and appears far. A car is visible near the center and appears far."
+    },
+    {
+      "frame": 101,
+      "timestamp_s": 3.3666666666666667,
+      "text": "A person is visible on the left and appears far. A person is visible near the center and appears far."
+    },
+    {
+      "frame": 109,
+      "timestamp_s": 3.6333333333333333,
+      "text": "A person is visible on the left and appears far. A car is visible near the center and appears far."
+    },
+    {
+      "frame": 124,
+      "timestamp_s": 4.133333333333334,
+      "text": "A person is visible on the left and appears far. A person is visible near the center and appears far."
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+:root {
+  color-scheme: light;
+  --background: #fbfafc;
+  --card: rgb(255 255 255 / 90%);
+  --primary: #7650a8;
+  --ai-active: #9b70ca;
+  --secondary-blue: #c7a9e8;
+  --highlight: #f2ecfa;
+  --main-text: #292330;
+  --secondary-text: #716879;
+  --border: #e9e3ef;
+  --success: #54a986;
+  --warning: #d19a3d;
+  --error: #bd5260;
+  --soft-shadow: 0 18px 55px rgb(46 28 67 / 7%), 0 2px 8px rgb(46 28 67 / 3%);
+  --small-shadow: 0 7px 22px rgb(46 28 67 / 6%);
+  --font-body: 'DM Sans', 'Segoe UI', sans-serif;
+  --font-display: 'Manrope', 'DM Sans', sans-serif;
+}
+
+body {
+  background: #fbfafc;
+}
+
+.page-wash {
+  background:
+    radial-gradient(ellipse at 52% 12%, rgb(231 220 248 / 48%), transparent 40%),
+    radial-gradient(ellipse at 100% 50%, rgb(199 169 232 / 12%), transparent 32%),
+    linear-gradient(152deg, #fbfafc 0%, #f7f4fa 54%, #fbfafc 100%);
+}
+
+.pipeline-track li.is-ready::after,
+.pipeline-track li.is-running::after {
+  background: #54a986;
+}
+
+.nav-item.is-current {
+  color: #55357c;
+  background: #f2ecfa;
+}

@@ -1,0 +1,908 @@
+.byaku-dashboard {
+  --background: #10071f;
+  --primary: #7042a4;
+  --main-text: #25143b;
+  --secondary-text: #514163;
+  --border: #d2c2eb;
+  color: #f7f2ff;
+  background: #10071f;
+}
+
+.byaku-dashboard .page-wash {
+  position: fixed;
+  background:
+    radial-gradient(ellipse at 68% 7%, rgb(167 139 250 / 18%), transparent 34%),
+    radial-gradient(ellipse at 27% 64%, rgb(119 67 179 / 20%), transparent 35%),
+    radial-gradient(ellipse at 88% 84%, rgb(196 167 255 / 12%), transparent 30%),
+    linear-gradient(145deg, #10071f, #1b1030 57%, #10071f);
+}
+
+.byaku-dashboard .page-wash::before {
+  inset: 0;
+  width: auto;
+  height: auto;
+  border: 0;
+  border-radius: 0;
+  background-image:
+    radial-gradient(#f2ebff 1px, transparent 1.5px),
+    radial-gradient(#c4a7ff 1px, transparent 1.5px);
+  background-position: 13px 19px, 71px 83px;
+  background-size: 137px 131px, 191px 173px;
+  opacity: .2;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.byaku-dashboard .dashboard-sidebar {
+  border-color: rgb(196 167 255 / 18%);
+  background: rgb(20 10 37 / 94%);
+  color: #f7f2ff;
+}
+
+.byaku-dashboard .dashboard-sidebar .brand-copy strong,
+.byaku-dashboard .dashboard-header h1,
+.byaku-dashboard .dashboard-brand {
+  color: #f7f2ff;
+}
+
+.byaku-dashboard .dashboard-sidebar .brand-copy small,
+.byaku-dashboard .nav-caption,
+.byaku-dashboard .dashboard-return,
+.byaku-dashboard .dashboard-sidebar-status small {
+  color: #c7b5df;
+}
+
+.byaku-dashboard .nav-item {
+  color: #ddd0ee;
+}
+
+.byaku-dashboard .nav-item:hover,
+.byaku-dashboard .nav-item.is-current {
+  border-color: rgb(196 167 255 / 35%);
+  color: #25143b;
+  background: #e9ddfc;
+}
+
+.byaku-dashboard .dashboard-main {
+  position: relative;
+  z-index: 1;
+}
+
+.byaku-dashboard .dashboard-intro,
+.byaku-dashboard .dashboard-head-status .connection-pill,
+.byaku-dashboard .dashboard-footer {
+  color: #e0d5f0;
+}
+
+.byaku-dashboard .dashboard-head-status .icon-link {
+  border-color: rgb(196 167 255 / 32%);
+  color: #f7f2ff;
+  background: #26163d;
+}
+
+.byaku-dashboard .pipeline-panel {
+  padding: 18px;
+  border: 1px solid rgb(196 167 255 / 34%);
+  border-radius: 20px;
+  background:
+    radial-gradient(ellipse at 90% 0%, rgb(167 139 250 / 22%), transparent 35%),
+    linear-gradient(125deg, #1b1030, #26163d 60%, #321b4b);
+  box-shadow: 0 18px 50px rgb(3 1 11 / 35%), 0 0 28px rgb(167 139 250 / 9%);
+}
+
+.byaku-dashboard .pipeline-panel .panel-heading h2 {
+  color: #fff;
+}
+
+.byaku-dashboard .pipeline-panel .section-kicker {
+  color: #c4a7ff;
+}
+
+.byaku-dashboard .pipeline-track {
+  grid-template-columns: repeat(9, minmax(100px, 1fr));
+  align-items: start;
+  gap: 8px;
+  overflow: visible;
+}
+
+.byaku-dashboard .pipeline-track li {
+  display: block;
+}
+
+.byaku-dashboard .pipeline-track li:not(:last-child)::after {
+  top: 21px;
+  right: -14px;
+  width: 20px;
+  background: #a78bfa;
+}
+
+.byaku-dashboard .stage-detail {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+
+.byaku-dashboard .pipeline-node {
+  width: 100%;
+  min-height: 56px;
+  padding: 7px 5px;
+  border: 1px solid #d2c2eb;
+  color: #34204d;
+  background: #e9ddfc;
+  white-space: normal;
+}
+
+.byaku-dashboard .pipeline-node i {
+  color: #7042a4;
+}
+
+.byaku-dashboard .stage-detail p {
+  margin: 8px 0 0;
+  padding: 9px;
+  border: 1px solid rgb(196 167 255 / 24%);
+  border-radius: 10px;
+  color: #eee5fa;
+  background: #1b1030;
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.byaku-dashboard .pipeline-track li[data-status="running"] .pipeline-node {
+  border-color: #55a879;
+  background: #d8f4e3;
+}
+
+.byaku-dashboard .pipeline-track li[data-status="error"] .pipeline-node,
+.byaku-dashboard .pipeline-track li[data-status="unavailable"] .pipeline-node {
+  border-color: #d87878;
+  background: #ffe2e2;
+  color: #5b1d2c;
+}
+
+.byaku-dashboard .pipeline-track li[data-status="fallback_unknown"] .pipeline-node,
+.byaku-dashboard .pipeline-track li[data-status="model_loaded"] .pipeline-node,
+.byaku-dashboard .pipeline-track li[data-status="loaded"] .pipeline-node,
+.byaku-dashboard .pipeline-track li[data-status="ready"] .pipeline-node {
+  border-color: #d2c2eb;
+  background: #dccbfa;
+}
+
+.byaku-dashboard .pipeline-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 12px;
+  color: #e7dcf6;
+  font-size: 10px;
+}
+
+.byaku-dashboard .pipeline-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.byaku-dashboard .legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.byaku-dashboard .status-ready { background: #5ac184; }
+.byaku-dashboard .status-warning { background: #f0bf56; }
+.byaku-dashboard .status-error { background: #ef7373; }
+
+.byaku-dashboard .dash-card {
+  border: 1px solid rgb(212 194 235 / 86%);
+  color: #25143b;
+  background: linear-gradient(145deg, #f2ebff, #e9ddfc 72%, #dccbfa);
+  box-shadow: 0 16px 42px rgb(3 1 11 / 28%), 0 0 20px rgb(167 139 250 / 9%);
+}
+
+.byaku-dashboard .dash-card:nth-child(even) {
+  background: linear-gradient(145deg, #f8f3ff, #e9ddfc 75%, #e3d6fa);
+}
+
+.byaku-dashboard .dash-card h2,
+.byaku-dashboard .dash-card h3,
+.byaku-dashboard .dash-card .section-kicker {
+  color: #321b4b;
+}
+
+.byaku-dashboard .dash-card p,
+.byaku-dashboard .dash-card small,
+.byaku-dashboard .dash-card label,
+.byaku-dashboard .dash-card .subtle-note,
+.byaku-dashboard .dash-card .upload-intro,
+.byaku-dashboard .dash-card .review-intro {
+  color: #514163;
+}
+
+.byaku-dashboard .data-tag,
+.byaku-dashboard .count-badge,
+.byaku-dashboard .camera-status {
+  border-color: #d2c2eb;
+  color: #49345f;
+  background: #f8f3ff;
+}
+
+.byaku-dashboard .table-card { grid-column: span 12; }
+.byaku-dashboard .review-card { grid-column: span 12; }
+.byaku-dashboard .depth-card,
+.byaku-dashboard .graph-card,
+.byaku-dashboard .memory-card { grid-column: span 6; }
+.byaku-dashboard .narration-card,
+.byaku-dashboard .query-card { grid-column: span 6; }
+
+.byaku-dashboard .camera-controls,
+.byaku-dashboard .speech-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.byaku-dashboard .camera-controls .primary-button,
+.byaku-dashboard .speech-controls .primary-button,
+.byaku-dashboard .review-primary {
+  border-color: #6b3b99;
+  color: #fff;
+  background: linear-gradient(135deg, #7042a4, #512b7b);
+}
+
+.byaku-dashboard .text-button,
+.byaku-dashboard .review-secondary {
+  border: 1px solid #bdabda;
+  border-radius: 10px;
+  color: #49345f;
+  background: #f8f3ff;
+}
+
+.byaku-dashboard .dashboard-camera {
+  border: 1px solid #cbb8e8;
+  background: #170c28;
+}
+
+.byaku-dashboard .camera-placeholder,
+.byaku-dashboard .camera-placeholder small {
+  color: #eee5fa;
+}
+
+.byaku-dashboard .stage-caption,
+.byaku-dashboard .tracking-footnote,
+.byaku-dashboard .scene-change-list,
+.byaku-dashboard .scene-memory-list,
+.byaku-dashboard .query-evidence {
+  color: #514163;
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.byaku-dashboard .scene-change-list,
+.byaku-dashboard .scene-memory-list,
+.byaku-dashboard .query-evidence,
+.byaku-dashboard .graph-relationships {
+  display: grid;
+  gap: 7px;
+  margin: 12px 0 0;
+  padding-left: 18px;
+}
+
+.byaku-dashboard .table-wrap {
+  border: 1px solid #d8cbed;
+  border-radius: 12px;
+  background: rgb(255 255 255 / 42%);
+}
+
+.byaku-dashboard th {
+  border-color: #d8cbed;
+  color: #49345f;
+}
+
+.byaku-dashboard td {
+  border-color: #dfd4ef;
+  color: #34204d;
+}
+
+.byaku-dashboard .tracking-footnote {
+  margin-top: 10px;
+}
+
+.byaku-dashboard .review-frame-wrap {
+  border-color: #cbb8e8;
+  background: #1b1030;
+}
+
+.byaku-dashboard #review-frame-empty {
+  color: #eee5fa;
+}
+
+.byaku-dashboard .review-form,
+.byaku-dashboard .review-correction-form {
+  color: #34204d;
+}
+
+.byaku-dashboard .review-detection-option {
+  border-color: #d2c2eb;
+  color: #34204d;
+  background: #f8f3ff;
+}
+
+.byaku-dashboard .review-detection-option.is-selected {
+  border-color: #7042a4;
+  background: #dccbfa;
+}
+
+.byaku-dashboard .review-feedback-status[data-error="true"] {
+  color: #8d2436;
+}
+
+.byaku-dashboard .review-history,
+.byaku-dashboard .review-history li {
+  color: #49345f;
+}
+
+.byaku-dashboard .review-history-head {
+  border-color: #d8cbed;
+}
+
+.byaku-dashboard .review-history-head h3 {
+  color: #321b4b;
+}
+
+.byaku-dashboard .depth-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.byaku-dashboard .depth-pair figure {
+  min-width: 0;
+  margin: 0;
+}
+
+.byaku-dashboard .depth-pair figcaption {
+  min-height: 32px;
+  color: #49345f;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.byaku-dashboard #depth-source-preview,
+.byaku-dashboard #depth-preview {
+  display: block;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  max-height: 280px;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  border: 1px solid #cbb8e8;
+  border-radius: 12px;
+  background: #1b1030;
+}
+
+.byaku-dashboard #depth-source-preview[hidden],
+.byaku-dashboard #depth-preview[hidden] {
+  display: none;
+}
+
+.byaku-dashboard .depth-output-wrap {
+  position: relative;
+}
+
+.byaku-dashboard #depth-selection-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.byaku-dashboard .depth-image-empty,
+.byaku-dashboard .depth-output-empty {
+  min-height: 100px;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  border: 1px dashed #bdabda;
+  border-radius: 12px;
+  color: #655474;
+  text-align: center;
+  font-size: 11px;
+}
+
+.byaku-dashboard .depth-scale {
+  margin-top: 12px;
+  border-color: #d8cbed;
+}
+
+.byaku-dashboard .depth-scale span,
+.byaku-dashboard .depth-category-note {
+  color: #49345f;
+}
+
+.byaku-dashboard .depth-scale .scale-far { background: #4431a6; }
+.byaku-dashboard .depth-scale .scale-near { background: #f2cd3a; }
+
+.byaku-dashboard .graph-empty {
+  min-height: 220px;
+  border: 1px solid #d8cbed;
+  border-radius: 12px;
+  background: rgb(255 255 255 / 36%);
+}
+
+.byaku-dashboard #scene-graph-svg {
+  width: 100%;
+  min-height: 210px;
+  overflow: visible;
+}
+
+.byaku-dashboard .graph-edge {
+  stroke: #8b70ac;
+  stroke-width: 1.5;
+}
+
+.byaku-dashboard .graph-edge-label {
+  fill: #49345f;
+  font-size: 9px;
+}
+
+.byaku-dashboard .graph-object-node rect {
+  fill: #dccbfa;
+  stroke: #8b70ac;
+}
+
+.byaku-dashboard .graph-object-node text {
+  fill: #25143b;
+  font-size: 10px;
+}
+
+.byaku-dashboard .graph-object-node.is-selected rect {
+  fill: #c4a7ff;
+  stroke: #512b7b;
+  stroke-width: 2;
+}
+
+.byaku-dashboard .graph-selection,
+.byaku-dashboard .graph-relationships {
+  color: #49345f;
+}
+
+.byaku-dashboard .scene-question-form label,
+.byaku-dashboard .review-correction-form label {
+  display: block;
+  margin: 8px 0 5px;
+  color: #34204d;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.byaku-dashboard .scene-question-form > div {
+  display: flex;
+  gap: 8px;
+}
+
+.byaku-dashboard .scene-question-form input,
+.byaku-dashboard .review-correction-form input {
+  min-width: 0;
+  min-height: 38px;
+  padding: 8px 10px;
+  border: 1px solid #bdabda;
+  border-radius: 9px;
+  color: #25143b;
+  background: #fff;
+}
+
+.byaku-dashboard .scene-question-form input {
+  flex: 1;
+}
+
+.byaku-dashboard .query-recognized {
+  color: #7042a4;
+  font-weight: 700;
+}
+
+.byaku-dashboard .query-answer {
+  padding: 12px;
+  border: 1px solid #d2c2eb;
+  border-radius: 12px;
+  color: #34204d;
+  background: #f8f3ff;
+  line-height: 1.6;
+}
+
+.byaku-dashboard .speech-controls #speech-playback-status {
+  color: #49345f;
+  font-size: 10px;
+}
+
+.byaku-dashboard .sample-mode-note {
+  padding: 10px 12px;
+  border-left: 3px solid #7042a4;
+  border-radius: 6px;
+  background: #dccbfa;
+}
+
+.byaku-dashboard .bbox-editor {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(50px, 1fr));
+  gap: 8px;
+  margin: 12px 0;
+  padding: 10px;
+  border: 1px solid #bdabda;
+  border-radius: 10px;
+}
+
+.byaku-dashboard .bbox-editor legend {
+  padding: 0 4px;
+  color: #49345f;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.byaku-dashboard .bbox-editor label {
+  margin: 0;
+}
+
+.byaku-dashboard .review-extended-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 10px;
+}
+
+.byaku-dashboard .review-extended-actions button {
+  min-height: 34px;
+  padding: 7px 10px;
+  border-radius: 9px;
+}
+
+.byaku-dashboard .missed-form {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #d8cbed;
+}
+
+.byaku-dashboard .stage-explainer p {
+  color: #49345f;
+}
+
+.byaku-dashboard .dashboard-footer a {
+  color: #dccbfa;
+}
+
+@media (max-width: 1050px) {
+  .byaku-dashboard .pipeline-track {
+    grid-template-columns: repeat(5, minmax(100px, 1fr));
+  }
+}
+
+@media (max-width: 820px) {
+  .byaku-dashboard .dashboard-sidebar {
+    z-index: 10;
+  }
+
+  .byaku-dashboard .dashboard-main {
+    width: 100%;
+    padding: 22px 16px;
+  }
+
+  .byaku-dashboard .pipeline-track {
+    grid-template-columns: repeat(3, minmax(92px, 1fr));
+  }
+
+  .byaku-dashboard .live-card,
+  .byaku-dashboard .table-card,
+  .byaku-dashboard .review-card,
+  .byaku-dashboard .depth-card,
+  .byaku-dashboard .graph-card,
+  .byaku-dashboard .memory-card,
+  .byaku-dashboard .narration-card,
+  .byaku-dashboard .query-card {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 520px) {
+  .byaku-dashboard .dashboard-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .byaku-dashboard .pipeline-track {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .byaku-dashboard .pipeline-track li:not(:last-child)::after {
+    display: none;
+  }
+
+  .byaku-dashboard .depth-pair {
+    grid-template-columns: 1fr;
+  }
+
+  .byaku-dashboard .live-card-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .byaku-dashboard .bbox-editor {
+    grid-template-columns: repeat(2, minmax(50px, 1fr));
+  }
+}
+
+.byaku-dashboard {
+  --background: #f7f4fa;
+  --main-text: #292330;
+  --secondary-text: #514163;
+  --border: #e2d9ed;
+  color: #292330;
+  background: #f7f4fa;
+}
+
+.byaku-dashboard .page-wash {
+  background:
+    radial-gradient(ellipse at 68% 7%, rgb(167 139 250 / 12%), transparent 34%),
+    radial-gradient(ellipse at 27% 64%, rgb(119 67 179 / 8%), transparent 35%),
+    linear-gradient(145deg, #fbfafc, #f3eef8 57%, #fbfafc);
+}
+
+.byaku-dashboard .dashboard-sidebar {
+  border-color: #e2d9ed;
+  background: rgb(255 255 255 / 94%);
+  color: #292330;
+}
+
+.byaku-dashboard .dashboard-sidebar .brand-copy strong,
+.byaku-dashboard .dashboard-header h1,
+.byaku-dashboard .dashboard-brand {
+  color: #292330;
+}
+
+.byaku-dashboard .dashboard-sidebar .brand-copy small,
+.byaku-dashboard .nav-caption,
+.byaku-dashboard .dashboard-return,
+.byaku-dashboard .dashboard-sidebar-status small,
+.byaku-dashboard .dashboard-intro,
+.byaku-dashboard .dashboard-head-status .connection-pill,
+.byaku-dashboard .dashboard-footer {
+  color: #5e5368;
+}
+
+.byaku-dashboard .nav-item {
+  color: #514163;
+}
+
+.byaku-dashboard .nav-item:hover,
+.byaku-dashboard .nav-item.is-current {
+  border-color: #d7c5eb;
+  color: #42285e;
+  background: #eee5f8;
+}
+
+.byaku-dashboard .dashboard-head-status .connection-pill {
+  border-color: #e2d9ed;
+  background: #fff;
+}
+
+.byaku-dashboard .dashboard-head-status .icon-link {
+  border-color: #d7c5eb;
+  color: #56377c;
+  background: #fff;
+}
+
+.byaku-dashboard .dashboard-header h1 {
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.byaku-dashboard .dashboard-intro {
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.byaku-dashboard .pipeline-panel {
+  border-color: #5d3d7c;
+  background:
+    radial-gradient(ellipse at 90% 0%, rgb(167 139 250 / 18%), transparent 35%),
+    linear-gradient(125deg, #211433, #2b1a40 60%, #38204f);
+  box-shadow: 0 16px 42px rgb(46 28 67 / 18%);
+}
+
+.byaku-dashboard .pipeline-node {
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.byaku-dashboard .stage-detail p {
+  color: #f0eafb;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.byaku-dashboard .pipeline-legend {
+  color: #f0eafb;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.byaku-dashboard .dash-card {
+  border-color: #5d4773;
+  color: #f7f2ff;
+  background: linear-gradient(145deg, #211433, #291a3b 72%, #332047);
+  box-shadow: 0 14px 36px rgb(46 28 67 / 18%);
+}
+
+.byaku-dashboard .dash-card:nth-child(even) {
+  background: linear-gradient(145deg, #25163a, #2d1d42 75%, #38234e);
+}
+
+.byaku-dashboard .dash-card h2,
+.byaku-dashboard .dash-card h3,
+.byaku-dashboard .dash-card strong,
+.byaku-dashboard .dash-card label,
+.byaku-dashboard .dash-card th,
+.byaku-dashboard .dash-card td,
+.byaku-dashboard .dash-card figcaption,
+.byaku-dashboard .dash-card legend,
+.byaku-dashboard .dash-card .review-history,
+.byaku-dashboard .dash-card .review-history li,
+.byaku-dashboard .dash-card .scene-change-list,
+.byaku-dashboard .dash-card .scene-memory-list,
+.byaku-dashboard .dash-card .query-evidence,
+.byaku-dashboard .dash-card .graph-relationships,
+.byaku-dashboard .dash-card .stage-caption,
+.byaku-dashboard .dash-card .tracking-footnote,
+.byaku-dashboard .dash-card .depth-category-note {
+  color: #f7f2ff;
+}
+
+.byaku-dashboard .dash-card h2 {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.byaku-dashboard .dash-card h3 {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.byaku-dashboard .dash-card p,
+.byaku-dashboard .dash-card small,
+.byaku-dashboard .dash-card li,
+.byaku-dashboard .dash-card .upload-intro,
+.byaku-dashboard .dash-card .review-intro,
+.byaku-dashboard .dash-card .subtle-note,
+.byaku-dashboard .dash-card .depth-scale span,
+.byaku-dashboard .dash-card .depth-pair figcaption,
+.byaku-dashboard .dash-card .query-result-list dt,
+.byaku-dashboard .dash-card .query-result-list dd,
+.byaku-dashboard .dash-card .speech-controls #speech-playback-status {
+  color: #e1d7ed;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.byaku-dashboard .dash-card .section-kicker {
+  color: #d4b8ff;
+}
+
+.byaku-dashboard .data-tag,
+.byaku-dashboard .count-badge,
+.byaku-dashboard .camera-status {
+  border-color: #725b89;
+  color: #f2eafb;
+  background: #39284d;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.byaku-dashboard .text-button,
+.byaku-dashboard .review-secondary {
+  border-color: #806998;
+  color: #f7f2ff;
+  background: #3a294e;
+}
+
+.byaku-dashboard .text-button:hover,
+.byaku-dashboard .review-secondary:hover {
+  background: #49345f;
+}
+
+.byaku-dashboard .table-wrap,
+.byaku-dashboard .graph-empty,
+.byaku-dashboard .query-answer,
+.byaku-dashboard .review-detection-option,
+.byaku-dashboard .bbox-editor,
+.byaku-dashboard .sample-mode-note {
+  border-color: #5d4773;
+  color: #f2eafb;
+  background: #30213f;
+}
+
+.byaku-dashboard .table-wrap {
+  background: #30213f;
+}
+
+.byaku-dashboard .dash-card th,
+.byaku-dashboard .dash-card td,
+.byaku-dashboard .review-history-head {
+  border-color: #5d4773;
+}
+
+.byaku-dashboard .dash-card .review-history-head h3,
+.byaku-dashboard .dash-card .query-recognized {
+  color: #e0caff;
+}
+
+.byaku-dashboard .dash-card .system-list dt,
+.byaku-dashboard .dash-card .system-list dd {
+  color: #e1d7ed;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.byaku-dashboard .review-feedback-status[data-error="true"] {
+  color: #ffabb6;
+}
+
+.byaku-dashboard .review-detection-option.is-selected {
+  border-color: #b99ce4;
+  color: #fff;
+  background: #49345f;
+}
+
+.byaku-dashboard .depth-image-empty,
+.byaku-dashboard .depth-output-empty {
+  border-color: #806998;
+  color: #e1d7ed;
+}
+
+.byaku-dashboard .graph-edge-label {
+  fill: #e1d7ed;
+}
+
+.byaku-dashboard .graph-object-node rect {
+  fill: #49345f;
+  stroke: #b99ce4;
+}
+
+.byaku-dashboard .graph-object-node text {
+  fill: #fff;
+}
+
+.byaku-dashboard .graph-object-node.is-selected rect {
+  fill: #624884;
+  stroke: #e0caff;
+}
+
+.byaku-dashboard .scene-question-form label,
+.byaku-dashboard .review-correction-form label,
+.byaku-dashboard .bbox-editor legend {
+  color: #f2eafb;
+}
+
+.byaku-dashboard .scene-question-form input,
+.byaku-dashboard .review-correction-form input {
+  border-color: #806998;
+  color: #25143b;
+  background: #fff;
+}
+
+.byaku-dashboard .dashboard-footer a {
+  color: #56377c;
+}
+
+@media (max-width: 820px) {
+  .byaku-dashboard .dashboard-header h1 {
+    font-size: 27px;
+  }
+}
+
+@media (max-width: 520px) {
+  .byaku-dashboard .dashboard-header h1 {
+    font-size: 24px;
+  }
+}

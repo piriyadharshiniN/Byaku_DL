@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fbfafc">
+  <meta name="description" content="Use BYAKU's live camera and voice-guided scene assistant.">
+  <title>BYAKU | Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/redesign-base.css">
+  <link rel="stylesheet" href="/css/redesign-app.css">
+  <link rel="stylesheet" href="/css/assistant-runtime.css">
+  <link rel="stylesheet" href="/css/brand-logo.css">
+  <script src="/js/frontend_config.js" defer></script>
+  <script src="/js/camera_preview.js" defer></script>
+  <script src="/js/browser_websocket_client.js" defer></script>
+  <script src="/js/assistant_speech.js" defer></script>
+  <script src="/js/assistant_interface.js" defer></script>
+</head>
+<body>
+  <section class="home assistant-home">
+    <header class="app-header">
+      <a class="wordmark" href="/" aria-label="BYAKU welcome">
+        <span class="wordmark-icon"><img src="/assets/byaku-logo.png" alt=""></span>
+        BYAKU
+      </a>
+      <a class="header-voice" href="/dashboard.html">Project workflow <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <main class="home-content assistant-content">
+      <p class="eyebrow">YOUR PERSONAL VISION ASSISTANT</p>
+      <h1>Your world,<br><span>your journey.</span></h1>
+      <p class="home-description">Understand the world around you through helpful descriptions and voice-guided assistance.</p>
+
+      <section class="assistant-layout" aria-label="Live BYAKU assistant">
+        <div class="voice-panel assistant-panel" id="assistant-panel" data-state="idle">
+          <div class="assistant-state-chip"><span class="assistant-state-dot" aria-hidden="true"></span><span id="state-label">Idle</span></div>
+          <p class="assistant-kicker">BYAKU ASSISTANT</p>
+          <button class="voice-button" id="start-listening" type="button" aria-label="Start Assistant. Request camera access and connect to live scene analysis." aria-pressed="false">
+            <span class="voice-button-rings" aria-hidden="true">
+              <span class="voice-button-ring voice-button-ring-outer"></span>
+              <span class="voice-button-ring voice-button-ring-middle"></span>
+              <span class="voice-button-ring voice-button-ring-inner"></span>
+            </span>
+            <span class="voice-button-center" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="3" width="6" height="12" rx="3"></rect>
+                <path d="M5 11a7 7 0 0 0 14 0M12 18v3M9 21h6"></path>
+              </svg>
+            </span>
+          </button>
+          <p class="voice-button-label" id="assistant-action-label">Start Assistant</p>
+          <h2 class="assistant-state-title">Welcome to BYAKU</h2>
+          <p class="assistant-state-detail assistant-tagline">Your surroundings, brought to life.</p>
+          <p class="assistant-state-detail assistant-message" id="assistant-detail" aria-live="polite">Camera and microphone are off. Start BYAKU when you are ready.</p>
+          <p class="assistant-camera-hint"><span aria-hidden="true">●</span>Camera stays off until you start BYAKU; it opens only after you choose Start Assistant.</p>
+          <p class="transcript-line" id="transcript-line" aria-live="polite"></p>
+          <button class="text-button assistant-greeting-fallback" id="assistant-greeting-fallback" type="button">Hear “Your assistant is ready”</button>
+          <form class="assistant-query" id="text-query-form">
+            <label class="visually-hidden" for="text-query-input">Ask BYAKU a question</label>
+            <input id="text-query-input" name="query" type="text" autocomplete="off" placeholder="Ask about your surroundings…" required>
+            <button class="primary-button" type="submit">Ask</button>
+          </form>
+          <button class="text-button assistant-stop" id="stop-assistant" type="button" hidden>Stop assistant</button>
+          <a class="assistant-review-link" href="/dashboard.html#human-review">Review a camera detection and correction history <span aria-hidden="true">↗</span></a>
+        </div>
+
+        <section class="vision-panel" id="camera-panel" aria-labelledby="camera-title">
+          <div class="assistant-camera-heading">
+            <div><p class="eyebrow">LIVE CAMERA</p><h2 id="camera-title">Camera preview</h2></div>
+            <span class="assistant-camera-status" id="camera-status"><span class="status-dot" aria-hidden="true"></span>Camera off</span>
+          </div>
+          <div class="camera-placeholder assistant-camera-view" id="camera-view">
+            <video id="camera-video" class="camera-feed" autoplay muted playsinline aria-label="Live camera preview"></video>
+            <canvas class="camera-overlay" id="camera-overlay" aria-hidden="true"></canvas>
+            <div class="camera-empty" id="camera-placeholder">
+              <div class="camera-symbol" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none">
+                  <rect x="5" y="13" width="38" height="27" rx="5"></rect>
+                  <circle cx="24" cy="26.5" r="7"></circle>
+                  <path d="m15 13 3-5h12l3 5"></path>
+                </svg>
+              </div>
+              <h2>Ready to explore?</h2>
+              <p>The live camera preview appears here after you start the assistant.</p>
+            </div>
+            <span class="assistant-live-badge" id="preview-badge" hidden>LIVE</span>
+          </div>
+          <p class="camera-footnote assistant-camera-footnote" id="camera-footnote">No camera stream. No frame has been processed.</p>
+          <a class="assistant-workflow-link" href="/dashboard.html#live-view">View live pipeline output <span aria-hidden="true">↗</span></a>
+        </section>
+      </section>
+
+      <p class="home-footnote">Results are based on processed camera frames. Scene descriptions are assistance, not a substitute for checking your surroundings.</p>
+    </main>
+
+    <footer class="app-footer"><span>BYAKU</span><span>A little more awareness. A little more freedom.</span></footer>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </section>
+</body>
+</html>

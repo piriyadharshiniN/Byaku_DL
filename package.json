@@ -1,0 +1,17 @@
+{
+  "name": "byaku-web",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Voice-first BYAKU UI",
+  "scripts": {
+    "start": "node server/start.js",
+    "start:relay": "node server/http_websocket_relay.js",
+    "test": "node --test tests/*.test.cjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "ws": "^8.22.0"
+  }
+}

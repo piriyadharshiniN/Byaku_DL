@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10071F">
+  <meta name="description" content="Inspect BYAKU's live camera, detection, tracking, relative depth, spatial reasoning, memory, narration and review pipeline.">
+  <title>BYAKU | Project Workflow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/byaku_interface.css">
+  <link rel="stylesheet" href="/css/dashboard-redesign-theme.css">
+  <link rel="stylesheet" href="/css/workflow-galaxy.css">
+  <link rel="stylesheet" href="/css/brand-logo.css">
+  <script src="/js/frontend_config.js" defer></script>
+  <script src="/js/camera_preview.js" defer></script>
+  <script src="/js/browser_websocket_client.js" defer></script>
+  <script src="/js/assistant_speech.js" defer></script>
+  <script src="/js/workflow_upload.js" defer></script>
+  <script src="/js/workflow_dashboard.js" defer></script>
+</head>
+<body class="dashboard-page byaku-dashboard">
+  <div class="page-wash" aria-hidden="true"></div>
+  <aside class="dashboard-sidebar">
+    <a class="brand dashboard-brand" href="/" aria-label="BYAKU home"><span class="brand-mark brand-eye" aria-hidden="true"><img src="/assets/byaku-logo.png" alt=""></span><span class="brand-copy"><strong data-app-name>BYAKU</strong><small>Project workflow</small></span></a>
+    <button class="workflow-menu-toggle" id="workflow-menu-toggle" type="button" aria-expanded="false" aria-controls="workflow-navigation" aria-label="Open project navigation"><span></span><span></span></button>
+    <p class="nav-caption">WORKSPACE</p>
+    <nav class="dashboard-nav" id="workflow-navigation" aria-label="Dashboard sections">
+      <a class="nav-item is-current" href="#overview"><span class="nav-symbol">⌂</span>Overview</a>
+      <a class="nav-item" href="#upload-analysis"><span class="nav-symbol">↥</span>Image & Video Upload</a>
+      <a class="nav-item" href="#live-view"><span class="nav-symbol">◎</span>Live View</a>
+      <a class="nav-item" href="#detection"><span class="nav-symbol">⌗</span>Detection & Tracking</a>
+      <a class="nav-item" href="#scene-graph"><span class="nav-symbol">◇</span>Scene Graph & Memory</a>
+      <a class="nav-item" href="#human-review"><span class="nav-symbol">✓</span>Human Review</a>
+      <a class="nav-item" href="#depth"><span class="nav-symbol">◌</span>Depth Map</a>
+      <a class="nav-item" href="#query"><span class="nav-symbol">?</span>Voice Q&amp;A</a>
+      <a class="nav-item" href="#narration-output"><span class="nav-symbol">💬</span>Scene Description</a>
+      <a class="nav-item" href="/video_player.html" target="_blank"><span class="nav-symbol">▶</span>Video Player with Voice</a>
+    </nav>
+    <div class="dashboard-sidebar-status"><span class="status-dot status-dot-muted" aria-hidden="true"></span><span><strong>Backend connecting</strong><small>Live status check</small></span></div>
+    <a class="dashboard-return" href="/">← Return to BYAKU</a>
+  </aside>
+
+  <main class="dashboard-main" id="overview">
+    <header class="dashboard-header">
+      <div><p class="eyebrow"><span class="eyebrow-line"></span> PROJECT WORKFLOW</p><h1>How BYAKU understands a scene</h1><p class="dashboard-intro">Follow each real camera frame through YOLO11n, session-isolated tracking, Depth Anything V2, spatial reasoning, scene memory and voice output. Upload processing is clearly separate from live-camera mode.</p></div>
+      <div class="dashboard-head-status"><span class="connection-pill"><span class="status-dot" aria-hidden="true"></span><span>Checking backend status</span></span><a class="icon-link" href="/" aria-label="Return to assistant home" title="Assistant home"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1V10Z"/></svg></a></div>
+    </header>
+
+    <section class="pipeline-panel glass-panel" aria-labelledby="pipeline-title">
+      <div class="panel-heading"><div><p class="section-kicker">LIVE DATA PATH</p><h2 id="pipeline-title">One frame, end to end</h2></div><span class="data-tag">Select a stage for details</span></div>
+      <ol class="pipeline-track" aria-label="BYAKU live processing stages">
+        <li data-module="camera"><details class="stage-detail"><summary class="pipeline-node"><i>01</i>Camera</summary><p>Camera frame → JPEG. Browser permission and capture errors are shown in Live View.</p></details></li>
+        <li data-module="detection"><details class="stage-detail"><summary class="pipeline-node"><i>02</i>YOLO11n</summary><p>JPEG frame → model detections, classes, confidence and pixel boxes. Missing model weights produce an explicit error.</p></details></li>
+        <li data-module="tracking"><details class="stage-detail"><summary class="pipeline-node"><i>03</i>ByteTrack-style</summary><p>Detections → per-session IDs and lifecycle events using score tiers and IoU association.</p></details></li>
+        <li data-module="depth"><details class="stage-detail"><summary class="pipeline-node"><i>04</i>Depth Anything V2</summary><p>RGB frame → normalized relative depth map. Per-object central-box median → NEAR, MID-RANGE, FAR or UNKNOWN.</p></details></li>
+        <li data-module="spatial"><details class="stage-detail"><summary class="pipeline-node"><i>05</i>Spatial</summary><p>Boxes and relative depth → horizontal and vertical regions plus pairwise image-space relationships.</p></details></li>
+        <li data-module="scene"><details class="stage-detail"><summary class="pipeline-node"><i>06</i>Scene graph</summary><p>Current objects → graph nodes and spatial-relation edges for this frame.</p></details></li>
+        <li data-module="memory"><details class="stage-detail"><summary class="pipeline-node"><i>07</i>Memory</summary><p>Tracked observations → current/recent objects, continuity and scene changes within this session.</p></details></li>
+        <li data-module="narration"><details class="stage-detail"><summary class="pipeline-node"><i>08</i>Voice Q&amp;A</summary><p>Scene memory → grounded answers and concise narration. Browser playback is only reported after speech events.</p></details></li>
+        <li data-module="review"><details class="stage-detail"><summary class="pipeline-node"><i>09</i>HITL review</summary><p>Frame and object feedback → persistent SQLite record and audit event. Corrections do not change model weights.</p></details></li>
+      </ol>
+      <div class="pipeline-legend"><span><i class="legend-dot status-ready"></i>Ready / processed</span><span><i class="legend-dot status-warning"></i>Fallback / waiting</span><span><i class="legend-dot status-error"></i>Error / unavailable</span></div>
+    </section>
+
+    <section class="dash-card upload-card glass-panel" id="upload-analysis" aria-labelledby="upload-title">
+      <div class="panel-heading"><div><p class="section-kicker">SAMPLE / UPLOAD MODE</p><h2 id="upload-title">Analyze an image or sample video</h2></div><span class="data-tag">Separate from live camera</span></div>
+      <p class="upload-intro">Use an uploaded image or sample clip when a camera is unavailable. Images are processed once; videos are sampled with tracking. This mode is not labeled as a live-camera session. Video decoding depends on local OpenCV codecs.</p>
+      <form id="workflow-upload-form">
+        <label class="upload-file-label" for="workflow-upload-file">Choose an image or video</label>
+        <input id="workflow-upload-file" name="upload" type="file" accept=".jpg,.jpeg,.png,.mp4,.mov,.avi,.mkv,.webm,image/jpeg,image/png,video/mp4,video/quicktime,video/x-msvideo,video/x-matroska,video/webm">
+        <div class="upload-actions"><button class="primary-button" id="workflow-upload-process" type="submit" disabled>Process selected file</button><button class="text-button" id="workflow-upload-remove" type="button" hidden>Remove selection</button></div>
+      </form>
+      <p class="sample-mode-note"><strong>Sample-video mode:</strong> choose a local example clip above and process it to see actual model results. The video player is a separate media demo, not a source of live inference results.</p>
+      <p class="upload-status" id="workflow-upload-status" role="status" aria-live="polite"><span class="upload-spinner" id="workflow-upload-loading" aria-hidden="true" hidden></span><span id="workflow-upload-status-text">Select a JPG, JPEG, PNG, MP4, MOV, AVI, MKV, or WebM file. Maximum: 12 MB per image and 100 MB per video.</span></p>
+      <div class="upload-preview" id="workflow-upload-preview" hidden>
+        <p class="upload-filename" id="workflow-upload-filename"></p>
+        <img id="workflow-upload-image-preview" alt="Selected image preview" hidden>
+        <video id="workflow-upload-video-preview" controls preload="metadata" aria-label="Selected video preview" hidden></video>
+      </div>
+      <section class="upload-results" id="workflow-upload-results" aria-label="Upload analysis results" hidden>
+        <h3>Analysis result</h3>
+        <img class="upload-annotated-image" id="workflow-upload-annotated" alt="Image annotated with BYAKU object detections" hidden>
+        <p class="upload-scene-description" id="workflow-upload-description"></p>
+        <ul class="upload-object-list" id="workflow-upload-objects"></ul>
+        <div class="upload-samples" id="workflow-upload-samples" hidden></div>
+        <button class="primary-button" id="workflow-upload-speak" type="button" disabled>Speak Description</button>
+      </section>
+    </section>
+
+    <section class="dashboard-grid">
+      <article class="dash-card live-card glass-panel" id="live-view">
+        <div class="panel-heading"><div><p class="section-kicker">CAMERA</p><h2>Live View</h2></div><span class="camera-status" id="dash-camera-status"><span class="status-dot status-dot-muted" aria-hidden="true"></span>Camera Ready</span></div>
+        <div class="dashboard-camera camera-view" id="dash-camera-view"><video id="dash-camera-video" autoplay muted playsinline aria-label="Dashboard live camera preview"></video><canvas class="camera-overlay" id="dash-camera-overlay" aria-hidden="true"></canvas><div class="camera-placeholder" id="dash-camera-placeholder"><span class="camera-placeholder-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 10h5l2-3h8l2 3h5a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V12a2 2 0 0 1 2-2Z"/><circle cx="16" cy="17" r="5"/></svg></span><span>Camera not connected</span><small>Start a local preview to check the camera.</small></div><span class="camera-corner corner-tl" aria-hidden="true"></span><span class="camera-corner corner-tr" aria-hidden="true"></span><span class="camera-corner corner-bl" aria-hidden="true"></span><span class="camera-corner corner-br" aria-hidden="true"></span></div>
+        <div class="live-card-footer"><span id="dash-camera-detail">Camera is off · no frame received</span><div class="camera-controls"><button class="primary-button" id="dash-camera-toggle" type="button">Start live demo</button><button class="text-button" id="dash-camera-pause" type="button" disabled>Pause</button><button class="text-button" id="dash-camera-resume" type="button" disabled>Resume</button></div></div>
+        <p class="subtle-note" id="dash-camera-error" role="status" aria-live="polite">Starting requests camera permission and sends captured frames to the backend. Pause retains the connection; Stop releases the camera and backend session.</p>
+      </article>
+
+      <article class="dash-card table-card glass-panel" id="detection"><div class="panel-heading"><div><p class="section-kicker">YOLO11n + TRACKING</p><h2>Detection & tracking</h2></div><span class="count-badge" id="detection-count">0 objects</span></div><p class="stage-caption" id="detection-model-caption">Waiting for actual model status.</p><div class="table-wrap"><table><thead><tr><th scope="col">Object / confidence</th><th scope="col">Track ID / state</th><th scope="col">Movement</th><th scope="col">Position</th><th scope="col">Relative depth</th><th scope="col">Bounding box</th></tr></thead><tbody id="detection-rows"><tr class="empty-row"><td colspan="6">No detections received</td></tr></tbody></table></div><div class="tracking-footnote" id="tracking">Tracker output is waiting for an actual frame.</div><ul id="scene-change-list" class="scene-change-list" aria-label="Recent scene changes"><li>No tracked changes yet.</li></ul></article>
+
+      <article class="dash-card review-card glass-panel" id="human-review" aria-labelledby="human-review-title">
+        <div class="panel-heading"><div><p class="section-kicker">HUMAN-IN-THE-LOOP</p><h2 id="human-review-title">Human Review</h2></div><span class="data-tag" id="review-frame-label">Waiting for a live frame</span></div>
+        <p class="review-intro">Review detections from the active camera session. Confirm, correct a class or box, mark a false positive, or report a missed object by drawing its region. Feedback is stored for annotation; it never changes model weights.</p>
+        <div class="review-layout">
+          <div>
+            <div class="review-frame-wrap"><canvas id="review-frame-canvas" aria-label="Latest actual camera frame with detection boxes and labels"></canvas><p id="review-frame-empty">Start the live camera preview to display its latest processed frame.</p></div>
+            <ul class="review-detection-list" id="review-detection-list" aria-label="Select a detection to review"><li class="review-empty">No current detections</li></ul>
+          </div>
+          <div class="review-form">
+            <p class="review-selected" id="review-selected">Select a detection from the list or frame.</p>
+            <p class="review-question" id="review-question">Is this object detection correct?</p>
+            <div class="review-actions" id="review-answer-controls">
+              <button class="review-primary" id="review-confirm" type="button" disabled>Yes — Correct</button>
+              <button class="review-secondary" id="review-incorrect" type="button" disabled>No — Incorrect</button>
+            </div>
+            <div class="review-extended-actions"><button class="review-secondary" id="review-false-positive" type="button" disabled>False positive</button><button class="review-secondary" id="review-bbox-edit" type="button" disabled>Correct box</button><button class="review-secondary" id="review-missed-start" type="button" disabled>Report missed object</button></div>
+            <form id="review-correction-form" class="review-correction-form" hidden>
+              <p class="review-prediction">Model prediction: <strong id="review-predicted-name">—</strong></p>
+              <label for="review-corrected-label">What is the correct name of this object?</label>
+              <input id="review-corrected-label" name="corrected_label" type="text" list="review-known-classes" maxlength="80" autocomplete="off" placeholder="Search known names or enter a new name" required>
+              <datalist id="review-known-classes"></datalist>
+              <fieldset class="bbox-editor"><legend>Optional corrected box (frame pixels)</legend><label>X1<input id="review-bbox-x1" type="number" step="any"></label><label>Y1<input id="review-bbox-y1" type="number" step="any"></label><label>X2<input id="review-bbox-x2" type="number" step="any"></label><label>Y2<input id="review-bbox-y2" type="number" step="any"></label></fieldset>
+              <div class="review-actions"><button class="review-primary" id="review-save" type="submit">Save Correction</button><button class="text-button" id="review-cancel" type="button">Cancel</button></div>
+            </form>
+            <form id="review-missed-form" class="review-correction-form missed-form" hidden>
+              <p>Drag on the latest frame to mark the missed object's region, then enter its class.</p>
+              <label for="review-missed-label">Missed object class</label><input id="review-missed-label" maxlength="80" required>
+              <p class="missed-box-status" id="review-missed-box-status">No region selected.</p>
+              <div class="review-actions"><button class="review-primary" type="submit">Save missed object</button><button class="text-button" id="review-missed-cancel" type="button">Cancel</button></div>
+            </form>
+            <p class="review-feedback-status" id="review-feedback-status" role="status" aria-live="polite">Select one detection to review it.</p>
+            <div class="review-history-head"><h3>Review history</h3><button class="text-button" id="review-history-refresh" type="button">Refresh history</button></div>
+            <ol class="review-history" id="review-history" aria-live="polite"><li>No saved review actions.</li></ol>
+          </div>
+        </div>
+      </article>
+
+      <article class="dash-card depth-card glass-panel" id="depth"><div class="panel-heading"><div><p class="section-kicker">DEPTH ANYTHING V2</p><h2>Relative depth estimation</h2></div><span class="data-tag" id="depth-status">Waiting for a frame</span></div><p class="stage-caption" id="depth-model-caption">A pretrained depth model's actual per-frame output will be shown here; no brightness or size heuristic is used.</p><div class="depth-pair"><figure><figcaption>Original RGB frame</figcaption><img id="depth-source-preview" alt="Original camera frame sent to Depth Anything V2" hidden><p class="depth-image-empty">Waiting for a live frame</p></figure><figure><figcaption>Predicted relative depth · TURBO colour map</figcaption><div class="depth-output-wrap"><img class="depth-preview" id="depth-preview" alt="Depth Anything V2 relative depth map" hidden><canvas id="depth-selection-overlay" aria-hidden="true" hidden></canvas></div><p class="depth-output-empty" id="depth-message">Depth output will appear only after successful model inference.</p></figure></div><div class="depth-scale"><span><i class="scale-far"></i>LOW · farther in this frame</span><span><i class="scale-near"></i>HIGH · nearer in this frame</span></div><p class="depth-category-note">Object categories use the median prediction inside the central 50% of each detected box: NEAR · MID-RANGE · FAR · UNKNOWN. These are relative categories, never metres.</p><details class="stage-explainer"><summary>Model input and output</summary><p>BYAKU converts the captured BGR frame to RGB, lets the Depth Anything V2 image processor resize and normalize it, then resizes the prediction to the original frame and normalizes it within that frame. A selected object highlights its box and sampled region.</p></details></article>
+
+      <article class="dash-card graph-card glass-panel" id="scene-graph"><div class="panel-heading"><div><p class="section-kicker">SPATIAL REASONING</p><h2>Scene graph</h2></div><span class="data-tag">0 nodes · 0 edges</span></div><p class="stage-caption">Graph nodes are current detections; edges are computed image-space relationships, not physical measurements.</p><div class="graph-empty"><p id="scene-graph-empty">Scene graph appears after frame processing.</p><svg id="scene-graph-svg" viewBox="0 0 600 210" role="group" aria-label="Interactive scene graph"></svg></div><p id="graph-selection" class="graph-selection">Select a node to inspect it.</p><ul id="graph-relationships" class="graph-relationships"></ul></article>
+
+      <article class="dash-card memory-card glass-panel" id="scene-memory"><div class="panel-heading"><div><p class="section-kicker">TEMPORAL CONTEXT</p><h2>Scene memory</h2></div><span class="data-tag" id="memory-frame">No frame</span></div><p class="stage-caption">Current and recently missing objects are retained per live session; stale entries are evicted.</p><ul id="scene-memory-list" class="scene-memory-list"><li>Memory is waiting for the first processed frame.</li></ul></article>
+
+      <article class="dash-card narration-card glass-panel" id="narration-output"><div class="panel-heading"><div><p class="section-kicker">LATEST LIVE SCENE</p><h2>Generated narration</h2></div><span class="data-tag" id="narration-status">Waiting for scene</span></div><p class="narration-output" id="narration-text">A fresh narration appears after a live frame is processed.</p><div class="speech-controls"><button class="primary-button" id="narration-speak" type="button" disabled>Speak narration</button><button class="text-button" id="narration-stop" type="button" disabled>Stop speech</button><span id="speech-playback-status" role="status">Playback not started</span></div><p class="subtle-note">Text is generated from scene memory. Speech status changes only on browser speech events.</p></article>
+
+      <article class="dash-card query-card glass-panel" id="query"><div class="panel-heading"><div><p class="section-kicker">GROUNDED VOICE Q&amp;A</p><h2>Ask about this scene</h2></div><span class="data-tag">Active session memory only</span></div>            <p class="stage-caption">Try “Where is the bottle?”, “What is in front of me?”, or “Is there a person nearby?”</p><form id="scene-question-form" class="scene-question-form"><label for="scene-question">Question</label><div><input id="scene-question" maxlength="240" autocomplete="off" placeholder="Ask about an object in the current scene" required><button class="primary-button" type="submit" disabled>Ask</button><button class="text-button" id="scene-question-voice" type="button">Use voice</button></div></form><p id="query-recognized" class="query-recognized">Recognized question will appear here.</p><p id="query-answer" class="query-answer" role="status">Answers use current session scene memory; absent objects are reported as not visible.</p><button class="text-button" id="query-speak-answer" type="button" disabled>Speak answer</button><ul id="query-evidence" class="query-evidence"><li>No scene evidence yet.</li></ul></article>
+
+    </section>
+    <footer class="dashboard-footer"><span>BYAKU · Technical view</span><a href="/">Open product home <span aria-hidden="true">↗</span></a></footer>
+  </main>
+</body>
+</html>

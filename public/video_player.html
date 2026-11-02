@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BYAKU — Annotated Video & Scene Voice Player</title>
+  <meta name="description" content="Annotated video player with real-time YOLO tracking, Depth Anything V2 estimation, and synchronized scene narration speech.">
+  <link rel="stylesheet" href="/css/byaku_interface.css">
+  <style>
+    .player-container {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem 4rem;
+    }
+    .player-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .player-header h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text-bright, #f8fafc);
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .badge-accent {
+      font-size: 0.75rem;
+      background: rgba(0, 240, 255, 0.15);
+      color: #00f0ff;
+      border: 1px solid rgba(0, 240, 255, 0.4);
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .video-viewport-card {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      position: relative;
+    }
+    .video-wrapper {
+      position: relative;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-height: 70vh;
+      overflow: hidden;
+    }
+    .video-wrapper video {
+      width: 100%;
+      max-height: 70vh;
+      object-fit: contain;
+      display: block;
+    }
+    .controls-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.25rem;
+      background: rgba(15, 23, 42, 0.95);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .controls-left, .controls-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .btn-action {
+      background: #00f0ff;
+      color: #050b14;
+      font-weight: 600;
+      border: none;
+      padding: 0.6rem 1.25rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+      font-size: 0.95rem;
+    }
+    .btn-action:hover {
+      background: #38bdf8;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 240, 255, 0.3);
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: #f1f5f9;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      font-weight: 500;
+      padding: 0.6rem 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+    .time-indicator {
+      font-family: monospace;
+      font-size: 0.95rem;
+      color: #94a3b8;
+    }
+    .narration-display-card {
+      margin-top: 1.5rem;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(0, 240, 255, 0.2);
+      border-radius: 0.75rem;
+      padding: 1.25rem 1.5rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+    .narration-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #00f0ff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+    .narration-body {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #e2e8f0;
+      font-weight: 400;
+    }
+    .sound-wave {
+      display: inline-flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 14px;
+      margin-left: 6px;
+    }
+    .sound-wave span {
+      width: 3px;
+      height: 100%;
+      background: #00f0ff;
+      border-radius: 2px;
+      animation: wave 1s infinite ease-in-out;
+    }
+    .sound-wave span:nth-child(2) { animation-delay: 0.2s; }
+    .sound-wave span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes wave {
+      0%, 100% { height: 4px; }
+      50% { height: 14px; }
+    }
+    .telemetry-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .telemetry-card {
+      background: rgba(30, 41, 59, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 0.75rem;
+      padding: 1rem 1.25rem;
+    }
+    .telemetry-label {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem;
+    }
+    .telemetry-value {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+    .downloads-row {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body class="byaku-theme">
+  <div class="player-container">
+    <header class="player-header">
+      <div>
+        <h1>
+          <span>BYAKU Vision Player</span>
+          <span class="badge-accent">Object Tracking + Scene Voice</span>
+        </h1>
+        <p style="color: #94a3b8; font-size: 0.9rem; margin: 0.25rem 0 0;">
+          Source: <code>indoor_objects_video.mp4</code> — Real-time YOLO11n + ByteTrack + Depth Anything V2
+        </p>
+      </div>
+      <div>
+        <a href="/dashboard.html" class="btn-secondary" style="text-decoration: none;">← Workflow Dashboard</a>
+        <a href="/assistant.html" class="btn-secondary" style="text-decoration: none; margin-left: 0.5rem;">Live Assistant</a>
+      </div>
+    </header>
+
+    <main>
+      <!-- Video and audio synchronization card -->
+      <section class="video-viewport-card" aria-label="Annotated video presentation">
+        <div class="video-wrapper">
+          <video id="annotatedVideo" playsinline preload="auto">
+            <source src="/samples/indoor_objects_video_annotated.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+          </video>
+          <!-- Synchronized scene narration audio -->
+          <audio id="narrationAudio" preload="auto">
+            <source src="/samples/indoor_objects_video_narration.wav" type="audio/wav">
+          </audio>
+        </div>
+
+        <div class="controls-bar">
+          <div class="controls-left">
+            <button id="playBtn" class="btn-action" aria-label="Play video with voice narration">
+              <span id="playIcon">▶</span>
+              <span id="playText">Play with Voice</span>
+            </button>
+            <button id="replayBtn" class="btn-secondary" aria-label="Replay from start">↺ Replay</button>
+            <span id="timeDisplay" class="time-indicator">00:00 / 00:04</span>
+          </div>
+
+          <div class="controls-right">
+            <button id="muteVoiceBtn" class="btn-secondary" aria-label="Toggle voice narration audio">🔊 Voice: ON</button>
+            <label style="color: #94a3b8; font-size: 0.85rem; display: flex; align-items: center; gap: 0.4rem;">
+              Speed:
+              <select id="speedSelect" style="background: rgba(30, 41, 59, 0.8); color: #fff; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; padding: 0.2rem 0.4rem;">
+                <option value="0.75">0.75x</option>
+                <option value="1.0" selected>1.0x</option>
+                <option value="1.25">1.25x</option>
+              </select>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- Live scene narration card -->
+      <section class="narration-display-card" aria-live="polite">
+        <div class="narration-header">
+          <span>🔊 Synthesized Assistive Scene Description</span>
+          <div class="sound-wave" id="audioIndicator" style="display: none;">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+        <div id="narrationBody" class="narration-body">
+          "A person is visible on the left and appears far. A person is visible near the center and appears far. A motorcycle is visible in the lower center and appears at mid-range."
+        </div>
+      </section>
+
+      <!-- Telemetry details -->
+      <section class="telemetry-grid">
+        <div class="telemetry-card">
+          <div class="telemetry-label">Inference Model</div>
+          <div class="telemetry-value" style="color: #00f0ff;">YOLO11n + ByteTrack</div>
+        </div>
+        <div class="telemetry-card">
+          <div class="telemetry-label">Monocular Depth</div>
+          <div class="telemetry-value" style="color: #ffd700;">Depth Anything V2</div>
+        </div>
+        <div class="telemetry-card">
+          <div class="telemetry-label">Processed Frames</div>
+          <div class="telemetry-value">141 @ 30 FPS</div>
+        </div>
+        <div class="telemetry-card">
+          <div class="telemetry-label">Speech Engine</div>
+          <div class="telemetry-value" style="color: #a78bfa;">Pyttsx3 Offline TTS</div>
+        </div>
+      </section>
+
+      <!-- Direct Downloads -->
+      <section class="downloads-row">
+        <a href="/samples/indoor_objects_video_annotated.mp4" download="indoor_objects_video_annotated.mp4" class="btn-action" style="text-decoration: none;">
+          ⬇ Download Annotated Video (MP4 - 13 MB)
+        </a>
+        <a href="/samples/indoor_objects_video_narration.wav" download="indoor_objects_video_narration.wav" class="btn-secondary" style="text-decoration: none;">
+          ⬇ Download Spoken Voice Narration (WAV)
+        </a>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const video = document.getElementById('annotatedVideo');
+    const audio = document.getElementById('narrationAudio');
+    const playBtn = document.getElementById('playBtn');
+    const playIcon = document.getElementById('playIcon');
+    const playText = document.getElementById('playText');
+    const replayBtn = document.getElementById('replayBtn');
+    const muteVoiceBtn = document.getElementById('muteVoiceBtn');
+    const speedSelect = document.getElementById('speedSelect');
+    const timeDisplay = document.getElementById('timeDisplay');
+    const audioIndicator = document.getElementById('audioIndicator');
+
+    let voiceMuted = false;
+
+    function formatTime(seconds) {
+      const mins = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    function updatePlayState() {
+      if (video.paused) {
+        playIcon.textContent = '▶';
+        playText.textContent = 'Play with Voice';
+        audioIndicator.style.display = 'none';
+      } else {
+        playIcon.textContent = '⏸';
+        playText.textContent = 'Pause';
+        if (!voiceMuted) audioIndicator.style.display = 'inline-flex';
+      }
+    }
+
+    playBtn.addEventListener('click', async () => {
+      if (video.paused) {
+        try {
+          audio.currentTime = video.currentTime;
+          await video.play();
+          if (!voiceMuted) await audio.play();
+        } catch (e) {
+          console.error('Playback error:', e);
+        }
+      } else {
+        video.pause();
+        audio.pause();
+      }
+      updatePlayState();
+    });
+
+    replayBtn.addEventListener('click', async () => {
+      video.currentTime = 0;
+      audio.currentTime = 0;
+      try {
+        await video.play();
+        if (!voiceMuted) await audio.play();
+      } catch (e) {}
+      updatePlayState();
+    });
+
+    video.addEventListener('timeupdate', () => {
+      timeDisplay.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration || 4.7)}`;
+      // Resynchronize audio if drifting > 0.3s
+      if (Math.abs(audio.currentTime - video.currentTime) > 0.3) {
+        audio.currentTime = video.currentTime;
+      }
+    });
+
+    video.addEventListener('ended', () => {
+      audio.pause();
+      updatePlayState();
+    });
+
+    muteVoiceBtn.addEventListener('click', () => {
+      voiceMuted = !voiceMuted;
+      audio.muted = voiceMuted;
+      muteVoiceBtn.textContent = voiceMuted ? '🔇 Voice: OFF' : '🔊 Voice: ON';
+      audioIndicator.style.display = (!voiceMuted && !video.paused) ? 'inline-flex' : 'none';
+    });
+
+    speedSelect.addEventListener('change', (e) => {
+      const rate = parseFloat(e.target.value);
+      video.playbackRate = rate;
+      audio.playbackRate = rate;
+    });
+
+    video.addEventListener('seeking', () => {
+      audio.currentTime = video.currentTime;
+    });
+  </script>
+</body>
+</html>
